@@ -4,11 +4,14 @@
   "exports": "./mod.ts",
   "tasks": {
     "build": "deno run -A ./build.ts",
-    "bump": "deno run -A jsr:@mys/bump@1"
+    "bump": "deno run -A jsr:@mys/bump@1",
+    "test:run": "deno test -A",
+    "test:watch": "deno test -A --watch"
   },
   "imports": {
     "@doctor/encoding-stream": "jsr:@doctor/encoding-stream@^1.2.7",
     "@std/assert": "jsr:@std/assert@1",
-    "@std/encoding": "jsr:@std/encoding@^1.0.5"
+    "@std/encoding": "jsr:@std/encoding@^1.0.5",
+    "@std/expect": "jsr:@std/expect@^1.0.8"
   }
 }
