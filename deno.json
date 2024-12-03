@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "exports": "./mod.ts",
   "tasks": {
-    "build": "deno run -A ./build.ts"
+    "build": "deno run -A ./build.ts",
+    "bump": "deno run -A jsr:@mys/bump@1"
   },
   "imports": {
     "@doctor/encoding-stream": "jsr:@doctor/encoding-stream@^1.2.7",
