@@ -12,7 +12,7 @@ deno add @jsr:@dldc/librsync
 ## Usage
 
 ```ts
-import initLibrsync, { signature, diff, apply } from "@dldc/librsync";
+import { signature, diff, apply } from "@dldc/librsync";
 
 const checksum = signature(destFile); // you can specify block size as second argument
 // send checksum to source...
