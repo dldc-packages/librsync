@@ -17,4 +17,5 @@ jobs:
         with:
           deno-version: v1.x # Run with latest stable Deno.
 
+      - run: deno task check
       - run: npx jsr publish

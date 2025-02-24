@@ -8,7 +8,9 @@ import {
   signature as librsync_signature,
 } from "./src/initLibrsync.js";
 
-const wasmSource = "BASE64_ENCODED_WASM_BINARY";
+const wasmSource =
+  // deno-fmt-ignore
+  "BASE64_ENCODED_WASM_BINARY";
 let initialized = false;
 
 function ensureInit() {

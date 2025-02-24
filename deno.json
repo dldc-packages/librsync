@@ -6,12 +6,21 @@
     "build": "deno run -A ./build.ts",
     "bump": "deno run -A jsr:@mys/bump@1",
     "test:run": "deno test -A",
-    "test:watch": "deno test -A --watch"
+    "test:watch": "deno test -A --watch",
+    "check": "deno fmt --check . && deno lint . && deno task test:run",
+    "outdated": "deno outdated",
+    "update": "deno outdated --update --latest --interactive"
   },
   "imports": {
     "@doctor/encoding-stream": "jsr:@doctor/encoding-stream@^1.2.7",
-    "@std/assert": "jsr:@std/assert@1",
-    "@std/encoding": "jsr:@std/encoding@^1.0.5",
-    "@std/expect": "jsr:@std/expect@^1.0.8"
+    "@std/assert": "jsr:@std/assert@^1.0.11",
+    "@std/encoding": "jsr:@std/encoding@^1.0.7",
+    "@std/expect": "jsr:@std/expect@^1.0.13"
+  },
+  "lint": {
+    "exclude": ["src/initLibrsync.js", "src/initLibrsync.d.ts"]
+  },
+  "fmt": {
+    "exclude": ["src/initLibrsync.js", "src/initLibrsync.d.ts"]
   }
 }

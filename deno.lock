@@ -2,11 +2,10 @@
   "version": "4",
   "specifiers": {
     "jsr:@doctor/encoding-stream@^1.2.7": "1.2.7",
-    "jsr:@std/assert@1": "1.0.8",
-    "jsr:@std/assert@^1.0.8": "1.0.8",
+    "jsr:@std/assert@^1.0.11": "1.0.11",
     "jsr:@std/encoding@0": "0.224.3",
-    "jsr:@std/encoding@^1.0.5": "1.0.5",
-    "jsr:@std/expect@^1.0.8": "1.0.8",
+    "jsr:@std/encoding@^1.0.7": "1.0.7",
+    "jsr:@std/expect@^1.0.13": "1.0.13",
     "jsr:@std/internal@^1.0.5": "1.0.5"
   },
   "jsr": {
@@ -16,8 +15,8 @@
         "jsr:@std/encoding@0"
       ]
     },
-    "@std/assert@1.0.8": {
-      "integrity": "ebe0bd7eb488ee39686f77003992f389a06c3da1bbd8022184804852b2fa641b",
+    "@std/assert@1.0.11": {
+      "integrity": "2461ef3c368fe88bc60e186e7744a93112f16fd110022e113a0849e94d1c83c1",
       "dependencies": [
         "jsr:@std/internal"
       ]
@@ -25,13 +24,13 @@
     "@std/encoding@0.224.3": {
       "integrity": "5e861b6d81be5359fad4155e591acf17c0207b595112d1840998bb9f476dbdaf"
     },
-    "@std/encoding@1.0.5": {
-      "integrity": "ecf363d4fc25bd85bd915ff6733a7e79b67e0e7806334af15f4645c569fefc04"
+    "@std/encoding@1.0.7": {
+      "integrity": "f631247c1698fef289f2de9e2a33d571e46133b38d042905e3eac3715030a82d"
     },
-    "@std/expect@1.0.8": {
-      "integrity": "27e40d8f3aefb372fc6a703fb0b69e34560e72a2f78705178babdffa00119a5f",
+    "@std/expect@1.0.13": {
+      "integrity": "d8e236c7089cd9fcf5e6032f27dadc3db6349d0aee48c15bc71d717bca5baa42",
       "dependencies": [
-        "jsr:@std/assert@^1.0.8",
+        "jsr:@std/assert",
         "jsr:@std/internal"
       ]
     },
@@ -42,9 +41,9 @@
   "workspace": {
     "dependencies": [
       "jsr:@doctor/encoding-stream@^1.2.7",
-      "jsr:@std/assert@1",
-      "jsr:@std/encoding@^1.0.5",
-      "jsr:@std/expect@^1.0.8"
+      "jsr:@std/assert@^1.0.11",
+      "jsr:@std/encoding@^1.0.7",
+      "jsr:@std/expect@^1.0.13"
     ]
   }
 }
