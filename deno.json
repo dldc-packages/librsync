@@ -1,6 +1,6 @@
 {
   "name": "@dldc/librsync",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "exports": "./mod.ts",
   "tasks": {
     "build": "deno run -A ./build.ts",
@@ -18,9 +18,15 @@
     "@std/expect": "jsr:@std/expect@^1.0.13"
   },
   "lint": {
-    "exclude": ["src/initLibrsync.js", "src/initLibrsync.d.ts"]
+    "exclude": [
+      "src/initLibrsync.js",
+      "src/initLibrsync.d.ts"
+    ]
   },
   "fmt": {
-    "exclude": ["src/initLibrsync.js", "src/initLibrsync.d.ts"]
+    "exclude": [
+      "src/initLibrsync.js",
+      "src/initLibrsync.d.ts"
+    ]
   }
 }
