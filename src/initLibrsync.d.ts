@@ -1,7 +1,29 @@
 /* tslint:disable */
 /* eslint-disable */
+/**
+ * Generate a signature for the provided data using the specified block size and crypto hash size.
+ *
+ * # Arguments
+ * * `data` - The input data to generate the signature for.
+ * * `block_size` - The block size to use
+ * * `crypto_hash_size` - The hash size to use (must be at least 16).
+ */
 export function signature(data: Uint8Array, block_size: number, crypto_hash_size: number): Uint8Array;
+/**
+ * Compute the diff (patch) between the signature and new data.
+ *
+ * # Arguments
+ * * `signature` - The signature bytes from the original data.
+ * * `new_data` - The new data to compare against the signature.
+ */
 export function diff(signature: Uint8Array, new_data: Uint8Array): Uint8Array;
+/**
+ * Apply a patch to the base data to reconstruct the new data.
+ *
+ * # Arguments
+ * * `base_data` - The original data.
+ * * `patch` - The patch bytes to apply.
+ */
 export function apply(base_data: Uint8Array, patch: Uint8Array): Uint8Array;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;

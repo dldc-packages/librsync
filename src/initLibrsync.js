@@ -32,6 +32,12 @@ function getArrayU8FromWasm0(ptr, len) {
     return getUint8ArrayMemory0().subarray(ptr / 1, ptr / 1 + len);
 }
 /**
+ * Generate a signature for the provided data using the specified block size and crypto hash size.
+ *
+ * # Arguments
+ * * `data` - The input data to generate the signature for.
+ * * `block_size` - The block size to use
+ * * `crypto_hash_size` - The hash size to use (must be at least 16).
  * @param {Uint8Array} data
  * @param {number} block_size
  * @param {number} crypto_hash_size
@@ -52,6 +58,11 @@ function takeFromExternrefTable0(idx) {
     return value;
 }
 /**
+ * Compute the diff (patch) between the signature and new data.
+ *
+ * # Arguments
+ * * `signature` - The signature bytes from the original data.
+ * * `new_data` - The new data to compare against the signature.
  * @param {Uint8Array} signature
  * @param {Uint8Array} new_data
  * @returns {Uint8Array}
@@ -71,6 +82,11 @@ export function diff(signature, new_data) {
 }
 
 /**
+ * Apply a patch to the base data to reconstruct the new data.
+ *
+ * # Arguments
+ * * `base_data` - The original data.
+ * * `patch` - The patch bytes to apply.
  * @param {Uint8Array} base_data
  * @param {Uint8Array} patch
  * @returns {Uint8Array}
