@@ -2,9 +2,9 @@
 import { decodeBase64 } from "@std/encoding/base64";
 // @ts-types='./src/initLibrsync.d.ts'
 import {
-  initSync,
   apply as librsync_apply,
   diff as librsync_diff,
+  initSync,
   signature as librsync_signature,
 } from "./src/initLibrsync.js";
 
@@ -31,7 +31,7 @@ function ensureInit() {
 export function signature(
   data: Uint8Array,
   blockSize: number = 1024,
-  cryptoHashSize: number = 16
+  cryptoHashSize: number = 16,
 ): Uint8Array {
   if (cryptoHashSize > 16) {
     throw new Error("cryptoHashSize must be at most 16");
