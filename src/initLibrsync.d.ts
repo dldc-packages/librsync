@@ -5,8 +5,8 @@
  *
  * # Arguments
  * * `data` - The input data to generate the signature for.
- * * `block_size` - The block size to use
- * * `crypto_hash_size` - The hash size to use (must be at least 16).
+ * * `block_size` - The granularity of the signature. Smaller block sizes yield larger, but more precise, signatures.
+ * * `crypto_hash_size` - The number of bytes to use from the MD4 hash (must be at most 16). The larger this is, the less likely that a delta will be mis-applied.
  */
 export function signature(data: Uint8Array, block_size: number, crypto_hash_size: number): Uint8Array;
 /**
@@ -30,13 +30,13 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
-  readonly signature: (a: number, b: number, c: number, d: number) => [number, number];
+  readonly signature: (a: number, b: number, c: number, d: number) => [number, number, number, number];
   readonly diff: (a: number, b: number, c: number, d: number) => [number, number, number, number];
   readonly apply: (a: number, b: number, c: number, d: number) => [number, number, number, number];
   readonly __wbindgen_export_0: WebAssembly.Table;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
-  readonly __wbindgen_free: (a: number, b: number, c: number) => void;
   readonly __externref_table_dealloc: (a: number) => void;
+  readonly __wbindgen_free: (a: number, b: number, c: number) => void;
   readonly __wbindgen_start: () => void;
 }
 

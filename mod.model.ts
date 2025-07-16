@@ -2,9 +2,9 @@
 import { decodeBase64 } from "@std/encoding/base64";
 // @ts-types='./src/initLibrsync.d.ts'
 import {
+  initSync,
   apply as librsync_apply,
   diff as librsync_diff,
-  initSync,
   signature as librsync_signature,
 } from "./src/initLibrsync.js";
 
@@ -24,15 +24,21 @@ function ensureInit() {
 /**
  * Compute the signature (or checksum) of the given file
  * @param data The input file
- * @param blockSize The size of the blocks to use (default 1024, must be greater than 0)
- * @param cryptoHashSize must be at most 16, the length of an MD4 hash
+ * @param blockSize The granularity of the signature. Smaller block sizes yield larger, but more precise, signatures. (default 1024, must be greater than 0)
+ * @param cryptoHashSize The number of bytes to use from the MD4 hash (default 16, must be at most 16). The larger this is, the less likely that a delta will be mis-applied.
  * @returns The signature of the file
  */
 export function signature(
   data: Uint8Array,
   blockSize: number = 1024,
-  cryptoHashSize: number = 16,
+  cryptoHashSize: number = 16
 ): Uint8Array {
+  if (cryptoHashSize > 16) {
+    throw new Error("cryptoHashSize must be at most 16");
+  }
+  if (blockSize <= 0) {
+    throw new Error("blockSize must be greater than 0");
+  }
   ensureInit();
   return librsync_signature(data, blockSize, cryptoHashSize);
 }

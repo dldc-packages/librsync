@@ -5,10 +5,13 @@ use fast_rsync::{apply as rsync_apply, diff as rsync_diff, Signature, SignatureO
 ///
 /// # Arguments
 /// * `data` - The input data to generate the signature for.
-/// * `block_size` - The block size to use
-/// * `crypto_hash_size` - The hash size to use (must be at least 16).
+/// * `block_size` - The granularity of the signature. Smaller block sizes yield larger, but more precise, signatures.
+/// * `crypto_hash_size` - The number of bytes to use from the MD4 hash (must be at most 16). The larger this is, the less likely that a delta will be mis-applied.
 #[wasm_bindgen]
-pub fn signature(data: &[u8], block_size: u32, crypto_hash_size: u32) -> Vec<u8> {
+pub fn signature(data: &[u8], block_size: u32, crypto_hash_size: u32) -> Result<Vec<u8>, JsValue> {
+    if crypto_hash_size > 16 {
+        return Err(JsValue::from_str("crypto_hash_size must be at most 16"));
+    }
     let signature = Signature::calculate(
         data,
         SignatureOptions {
@@ -16,7 +19,7 @@ pub fn signature(data: &[u8], block_size: u32, crypto_hash_size: u32) -> Vec<u8>
             crypto_hash_size,
         },
     );
-    signature.serialized().to_vec()
+    Ok(signature.serialized().to_vec())
 }
 
 /// Compute the diff (patch) between the signature and new data.

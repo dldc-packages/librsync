@@ -27,6 +27,12 @@ function passArray8ToWasm0(arg, malloc) {
     return ptr;
 }
 
+function takeFromExternrefTable0(idx) {
+    const value = wasm.__wbindgen_export_0.get(idx);
+    wasm.__externref_table_dealloc(idx);
+    return value;
+}
+
 function getArrayU8FromWasm0(ptr, len) {
     ptr = ptr >>> 0;
     return getUint8ArrayMemory0().subarray(ptr / 1, ptr / 1 + len);
@@ -36,8 +42,8 @@ function getArrayU8FromWasm0(ptr, len) {
  *
  * # Arguments
  * * `data` - The input data to generate the signature for.
- * * `block_size` - The block size to use
- * * `crypto_hash_size` - The hash size to use (must be at least 16).
+ * * `block_size` - The granularity of the signature. Smaller block sizes yield larger, but more precise, signatures.
+ * * `crypto_hash_size` - The number of bytes to use from the MD4 hash (must be at most 16). The larger this is, the less likely that a delta will be mis-applied.
  * @param {Uint8Array} data
  * @param {number} block_size
  * @param {number} crypto_hash_size
@@ -47,16 +53,14 @@ export function signature(data, block_size, crypto_hash_size) {
     const ptr0 = passArray8ToWasm0(data, wasm.__wbindgen_malloc);
     const len0 = WASM_VECTOR_LEN;
     const ret = wasm.signature(ptr0, len0, block_size, crypto_hash_size);
+    if (ret[3]) {
+        throw takeFromExternrefTable0(ret[2]);
+    }
     var v2 = getArrayU8FromWasm0(ret[0], ret[1]).slice();
     wasm.__wbindgen_free(ret[0], ret[1] * 1, 1);
     return v2;
 }
 
-function takeFromExternrefTable0(idx) {
-    const value = wasm.__wbindgen_export_0.get(idx);
-    wasm.__externref_table_dealloc(idx);
-    return value;
-}
 /**
  * Compute the diff (patch) between the signature and new data.
  *
