@@ -1,6 +1,6 @@
 {
   "name": "@dldc/librsync",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "exports": "./mod.ts",
   "tasks": {
     "build": "deno run -A ./build.ts",
