@@ -2,9 +2,9 @@
 import { decodeBase64 } from "@std/encoding/base64";
 // @ts-types='./src/initLibrsync.d.ts'
 import {
+  initSync,
   apply as librsync_apply,
   diff as librsync_diff,
-  initSync,
   signature as librsync_signature,
 } from "./src/initLibrsync.js";
 
@@ -31,8 +31,8 @@ function ensureInit() {
 export function signature(
   data: Uint8Array,
   blockSize: number = 1024,
-  cryptoHashSize: number = 16,
-): Uint8Array {
+  cryptoHashSize: number = 16
+): Uint8Array<ArrayBuffer> {
   if (cryptoHashSize > 16) {
     throw new Error("cryptoHashSize must be at most 16");
   }
@@ -40,7 +40,11 @@ export function signature(
     throw new Error("blockSize must be greater than 0");
   }
   ensureInit();
-  return librsync_signature(data, blockSize, cryptoHashSize);
+  return librsync_signature(
+    data,
+    blockSize,
+    cryptoHashSize
+  ) as Uint8Array<ArrayBuffer>;
 }
 
 /**
@@ -49,9 +53,12 @@ export function signature(
  * @param otherFile The file to compare against the original
  * @returns A patch file that can be used to transform the original file into the new one
  */
-export function diff(signature: Uint8Array, otherFile: Uint8Array): Uint8Array {
+export function diff(
+  signature: Uint8Array,
+  otherFile: Uint8Array
+): Uint8Array<ArrayBuffer> {
   ensureInit();
-  return librsync_diff(signature, otherFile);
+  return librsync_diff(signature, otherFile) as Uint8Array<ArrayBuffer>;
 }
 
 /**
@@ -60,7 +67,10 @@ export function diff(signature: Uint8Array, otherFile: Uint8Array): Uint8Array {
  * @param patch The patch file (as computed by `diff`)
  * @returns The updated file which should match the original file
  */
-export function apply(file: Uint8Array, patch: Uint8Array): Uint8Array {
+export function apply(
+  file: Uint8Array,
+  patch: Uint8Array
+): Uint8Array<ArrayBuffer> {
   ensureInit();
-  return librsync_apply(file, patch);
+  return librsync_apply(file, patch) as Uint8Array<ArrayBuffer>;
 }
