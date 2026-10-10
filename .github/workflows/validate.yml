@@ -1,0 +1,19 @@
+name: Validate
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: voidzero-dev/setup-vp@v1.21.2
+        with:
+          # Node + pnpm resolve from package.json devEngines (no .node-version file).
+          cache: true
+      - run: vp check
+      - run: vp test run
+      - run: vp pack

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node"],
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "paths": { "@dldc/librsync": ["./mod.ts"] }
+  },
+  // mod.model.ts is the generation template (its wasm placeholder is spliced into
+  // mod.ts by build.ts) — only the generated mod.ts is part of the project.
+  "include": ["mod.ts", "src", "tests", "build.ts", "vite.config.ts"]
+}

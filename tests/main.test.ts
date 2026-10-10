@@ -1,7 +1,7 @@
-import { expect } from "@std/expect";
-import { apply, diff, signature } from "../mod.ts";
+import { expect, test } from "vite-plus/test";
+import { apply, diff, signature } from "@dldc/librsync";
 
-Deno.test("basic usage", () => {
+test("basic usage", () => {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
@@ -16,7 +16,7 @@ Deno.test("basic usage", () => {
   expect(resultStr).toEqual("Hello librsync World !");
 });
 
-Deno.test("Copy file", () => {
+test("Copy file", () => {
   const remoteFile = new Uint8Array([]);
   const localFile = new Uint8Array([1, 2, 3, 4, 5]);
 

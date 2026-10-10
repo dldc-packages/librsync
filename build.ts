@@ -1,27 +1,24 @@
-import { encodeBase64 } from "@std/encoding";
+// Regenerate the WASM artifacts (src/initLibrsync.js, src/initLibrsync.d.ts,
+// src/librsync.wasm) and the public entry mod.ts from the Rust source.
+//
+// Prerequisite: wasm-pack — https://rustwasm.github.io/wasm-pack/
+//   wasm-pack build --target web --out-dir ../wasm
+import { execFileSync } from "node:child_process";
+import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
 
-// Init rust project
-// wasm-pack build --target deno --out-dir ../wasm
-const command = new Deno.Command("wasm-pack", {
-  args: ["build", "--target", "web", "--out-dir", "../wasm"],
+// Build the Rust crate to WASM and emit the JS/TS glue + wasm binary.
+execFileSync("wasm-pack", ["build", "--target", "web", "--out-dir", "../wasm"], {
   cwd: "./rust",
-  stdout: "inherit",
-  stderr: "inherit",
+  stdio: "inherit",
 });
-await command.output();
 
-// Copy files
-await Deno.copyFile("./wasm/librsync_rust_bg.wasm", "./src/librsync.wasm");
-await Deno.copyFile("./wasm/librsync_rust.d.ts", "./src/initLibrsync.d.ts");
-await Deno.copyFile("./wasm/librsync_rust.js", "./src/initLibrsync.js");
+// Copy the generated files into src/.
+copyFileSync("./wasm/librsync_rust_bg.wasm", "./src/librsync.wasm");
+copyFileSync("./wasm/librsync_rust.d.ts", "./src/initLibrsync.d.ts");
+copyFileSync("./wasm/librsync_rust.js", "./src/initLibrsync.js");
 
-const wasmFile = await Deno.readFile("./src/librsync.wasm");
-const base64 = encodeBase64(wasmFile);
-
-const modelFile = await Deno.readTextFile("./mod.model.ts");
-
-const modFile = modelFile
-  .replace("BASE64_ENCODED_WASM_BINARY", base64)
-  .replace("mod.ts", "mod.model.ts");
-
-await Deno.writeTextFile("./mod.ts", modFile);
+// Embed the wasm binary into mod.ts by splicing the base64 into the model template.
+const base64 = readFileSync("./src/librsync.wasm").toString("base64");
+const modelFile = readFileSync("./mod.model.ts", "utf8");
+const modFile = modelFile.replace("BASE64_ENCODED_WASM_BINARY", base64);
+writeFileSync("./mod.ts", modFile);

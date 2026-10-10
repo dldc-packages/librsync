@@ -2,20 +2,28 @@ name: Publish
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  id-token: write # required for npm OIDC trusted publishing
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write # The OIDC ID token is used for authentication with JSR.
     steps:
       - uses: actions/checkout@v4
-      - uses: denoland/setup-deno@v1
+      - uses: voidzero-dev/setup-vp@v1.21.2
         with:
-          deno-version: v2.x
-
-      - run: deno task check
-      - run: npx jsr publish
+          # Node + pnpm resolve from package.json devEngines (no .node-version file).
+          cache: false # npm guidance: never cache in release builds.
+          # No registry-url: setup-vp writes `_authToken=${NODE_AUTH_TOKEN}` to .npmrc;
+          # with no secret set it expands to an empty token and stops the npm CLI from
+          # starting the OIDC exchange (ENEEDAUTH).
+      - run: vp check
+      - run: vp test run
+      - run: vp pack
+      # npm >= 11.5.1 (bundled with the Node that setup-vp installs) performs the
+      # OIDC exchange automatically. Do not use `pnpm publish`.
+      - run: npm publish --access public

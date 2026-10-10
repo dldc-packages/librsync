@@ -7,7 +7,7 @@
 ## Installation
 
 ```sh
-deno add @jsr:@dldc/librsync
+npm i @dldc/librsync
 ```
 
 ## Usage
