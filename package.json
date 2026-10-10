@@ -1,6 +1,6 @@
 {
   "name": "@dldc/librsync",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A WASM build of the fast_rsync crate implementing the rsync algorithm",
   "keywords": [
     "diff",
